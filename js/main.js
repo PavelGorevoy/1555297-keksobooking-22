@@ -1,7 +1,9 @@
 const getRandomInteger = function (num1, num2) {
 
   if (typeof num1 !== 'number' || typeof num2 !== 'number') {
+
     // Выход из функции при невалидном значении
+
     return
   }
 
@@ -9,7 +11,9 @@ const getRandomInteger = function (num1, num2) {
   const maxNumber = Math.floor(Math.max(num1, num2));
 
   if (minNumber < 0 && maxNumber <0) {
+
     // Выход из функции при значении меньше 0
+
     return
   }
 
@@ -22,10 +26,14 @@ const getRandomInteger = function (num1, num2) {
   }
 }
 
+getRandomInteger();
+
 const getRandomFloatNumber = function (num1, num2, range) {
 
   if (typeof num1 !== 'number' || typeof num2 !== 'number') {
+
     // Выход из функции при невалидном значении
+
     return
   }
 
@@ -33,7 +41,9 @@ const getRandomFloatNumber = function (num1, num2, range) {
   const maxNumber = Math.max(num1, num2);
 
   if (minNumber < 0 && maxNumber <0) {
+
     // Выход из функции при значении меньше 0
+
     return
   }
 
@@ -45,3 +55,5 @@ const getRandomFloatNumber = function (num1, num2, range) {
     return ((Math.random() * (maxNumber - minNumber)) + minNumber).toFixed(range);
   }
 }
+
+getRandomFloatNumber();
