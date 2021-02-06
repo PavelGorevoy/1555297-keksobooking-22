@@ -1,4 +1,4 @@
-const TITLE = [
+const titlesAdt = [
   'тут',
   'могла',
   'быть',
@@ -6,7 +6,7 @@ const TITLE = [
   'реклама',
 ];
 
-const TYPE = [
+const typesRoom = [
   'palace',
   'flat',
   'house',
@@ -25,7 +25,7 @@ const CHECKOUT = [
   '14:00',
 ];
 
-const FEATURES = [
+const featuresRoom = [
   'wifi',
   'dishwasher',
   'parking',
@@ -33,7 +33,7 @@ const FEATURES = [
   'elevator',
 ]
 
-const DESCRIPTION = [
+const descriptionsAdt = [
   'тут',
   'могла',
   'быть',
@@ -41,7 +41,7 @@ const DESCRIPTION = [
   'реклама',
 ];
 
-const PHOTOS = [
+const photosRoom = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
@@ -51,9 +51,7 @@ const getRandomInteger = function (num1, num2) {
 
   if (typeof num1 !== 'number' || typeof num2 !== 'number') {
 
-    // Выход из функции при невалидном значении
-
-    return
+    throw new Error('getRandomInteger - функция принимает только числа');
   }
 
   const minNumber = Math.ceil(Math.min(num1, num2));
@@ -61,9 +59,7 @@ const getRandomInteger = function (num1, num2) {
 
   if (minNumber < 0 && maxNumber < 0) {
 
-    // Выход из функции при значении меньше 0
-
-    return
+    throw new Error('getRandomInteger - функция принимает только положительные числа');
   }
 
   if (maxNumber === minNumber) {
@@ -79,9 +75,7 @@ const getRandomFloatNumber = function (num1, num2, range) {
 
   if (typeof num1 !== 'number' || typeof num2 !== 'number') {
 
-    // Выход из функции при невалидном значении
-
-    return
+    throw new Error('getRandomFloatNumber - функция принимает только числа');
   }
 
   const minNumber = Math.min(num1, num2);
@@ -89,9 +83,7 @@ const getRandomFloatNumber = function (num1, num2, range) {
 
   if (minNumber < 0 && maxNumber < 0) {
 
-    // Выход из функции при значении меньше 0
-
-    return
+    throw new Error('getRandomFloatNumber - функция принимает только положительные числа');
   }
 
   if (maxNumber === minNumber) {
@@ -103,10 +95,6 @@ const getRandomFloatNumber = function (num1, num2, range) {
   }
 }
 
-const getAvatar = function () {
-  return `img/avatars/user0${getRandomInteger(1, 8)}.png`;
-}
-
 const getLocation = function () {
   return {
     x: getRandomFloatNumber(35.65000, 35.70000, 5),
@@ -114,74 +102,52 @@ const getLocation = function () {
   }
 }
 
-const getAddres = function () {
-  const location = getLocation();
-
-  return `${location.x}, ${location.y}`;
-}
-
-const getPrise = function () {
-  return getRandomInteger(1, 1000000);
-}
-
-const getRooms = function () {
-  return getRandomInteger(1, 10);
-}
-
-const getQuests = function () {
-  return getRandomInteger(1, 100);
-}
-
-
 const getSubArray = function (dictionary) {
-  let subArrey = Array(getRandomInteger(1, dictionary.length)).fill('*');
+  let subArray = Array(getRandomInteger(1, dictionary.length)).fill('*');
 
-  const arrey = dictionary;
+  const array = dictionary.slice();
 
-  subArrey = subArrey.map(() => {
-    return  arrey.splice(getRandomInteger(0, arrey.length - 1), 1).shift();
+  subArray = subArray.map(() => {
+    return array.splice(getRandomInteger(0, array.length - 1), 1).shift();
   });
 
-  return subArrey;
+  return subArray;
 }
 
-const getFeatures = function () {
-  const feature = getSubArray(FEATURES);
-
-  return feature;
-}
-
-const getPhotos = function () {
-  const photo = getSubArray(PHOTOS);
-
-  return photo;
-}
-
-const getRandomArrayElement = function(array) {
+const getRandomArrayElement = function (array) {
   return array[getRandomInteger(0, array.length - 1)];
 }
 
-const getAuthor = function() {
+const getAuthor = function () {
   return {
-    avatar: getAvatar(),
+    avatar: `img/avatars/user0${getRandomInteger(1, 8)}.png`,
   };
 }
 
-const getOffer = function() {
+const getDescription = function () {
   return {
-    title: getRandomArrayElement(TITLE),
-    address: getAddres(),
-    price: getPrise(),
-    type: getRandomArrayElement(TYPE),
-    rooms: getRooms(),
-    guests: getQuests(),
+    title: getRandomArrayElement(titlesAdt),
+    address:
+      `${getRandomFloatNumber(35.65000, 35.70000, 5)},
+       ${getRandomFloatNumber(139.70000, 139.80000, 5)}`,
+    price: getRandomInteger(1, 1000000),
+    type: getRandomArrayElement(typesRoom),
+    rooms: getRandomInteger(1, 10),
+    guests: getRandomInteger(1, 100),
     checkin: getRandomArrayElement(CHECKIN),
     checkout: getRandomArrayElement(CHECKOUT),
-    features: getFeatures(),
-    description: getRandomArrayElement(DESCRIPTION),
-    photos: getPhotos(),
+    features: getSubArray(featuresRoom),
+    description: getRandomArrayElement(descriptionsAdt),
+    photos: getSubArray(photosRoom),
+  }
+}
+
+const getOffer = function () {
+  return {
+    avatar: getAuthor(),
+    location: getLocation(),
+    offer: getDescription(),
   };
 }
 
-getAuthor();
 getOffer();
