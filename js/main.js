@@ -1,4 +1,4 @@
-const titlesAdt = [
+const AD_TITLES = [
   'тут',
   'могла',
   'быть',
@@ -6,7 +6,7 @@ const titlesAdt = [
   'реклама',
 ];
 
-const typesRoom = [
+const ROOM_TYPES = [
   'palace',
   'flat',
   'house',
@@ -25,7 +25,7 @@ const CHECKOUT = [
   '14:00',
 ];
 
-const featuresRoom = [
+const ROOM_FEATURES = [
   'wifi',
   'dishwasher',
   'parking',
@@ -33,7 +33,7 @@ const featuresRoom = [
   'elevator',
 ]
 
-const descriptionsAdt = [
+const AD_DESCRIPTIONS = [
   'тут',
   'могла',
   'быть',
@@ -41,7 +41,7 @@ const descriptionsAdt = [
   'реклама',
 ];
 
-const photosRoom = [
+const ROOM_PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
@@ -102,16 +102,8 @@ const getLocation = function () {
   }
 }
 
-const getSubArray = function (dictionary) {
-  let subArray = Array(getRandomInteger(1, dictionary.length)).fill('*');
-
-  const array = dictionary.slice();
-
-  subArray = subArray.map(() => {
-    return array.splice(getRandomInteger(0, array.length - 1), 1).shift();
-  });
-
-  return subArray;
+const getSubArray = function (array) {
+  return array.slice(0, getRandomInteger(1, array.length-1));
 }
 
 const getRandomArrayElement = function (array) {
@@ -126,25 +118,25 @@ const getAuthor = function () {
 
 const getDescription = function () {
   return {
-    title: getRandomArrayElement(titlesAdt),
+    title: getRandomArrayElement(AD_TITLES),
     address:
       `${getRandomFloatNumber(35.65000, 35.70000, 5)},
        ${getRandomFloatNumber(139.70000, 139.80000, 5)}`,
     price: getRandomInteger(1, 1000000),
-    type: getRandomArrayElement(typesRoom),
+    type: getRandomArrayElement(ROOM_TYPES),
     rooms: getRandomInteger(1, 10),
     guests: getRandomInteger(1, 100),
     checkin: getRandomArrayElement(CHECKIN),
     checkout: getRandomArrayElement(CHECKOUT),
-    features: getSubArray(featuresRoom),
-    description: getRandomArrayElement(descriptionsAdt),
-    photos: getSubArray(photosRoom),
+    features: getSubArray(ROOM_FEATURES),
+    description: getRandomArrayElement(AD_DESCRIPTIONS),
+    photos: getSubArray(ROOM_PHOTOS),
   }
 }
 
 const getOffer = function () {
   return {
-    avatar: getAuthor(),
+    author: getAuthor(),
     location: getLocation(),
     offer: getDescription(),
   };
