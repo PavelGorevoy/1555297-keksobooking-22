@@ -10,10 +10,10 @@ const AD_TITLES = [
 ];
 
 const ROOM_TYPES = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
+  {palace: 'Дворец'},
+  {flat: 'Квартира'},
+  {house: 'Дом'},
+  {bungalow: 'Бунгало'},
 ];
 
 const CHECKINS = [
@@ -58,7 +58,7 @@ const getLocation = function () {
 }
 
 const getSubArray = function (array) {
-  return array.slice(0, getRandomInteger(1, array.length));
+  return array.slice(0, getRandomInteger(0, array.length));
 }
 
 const getRandomArrayElement = function (array) {
@@ -76,7 +76,7 @@ const getOffer = function () {
       address:
         `${getRandomFloatNumber(35.65000, 35.70000, 5)},
          ${getRandomFloatNumber(139.70000, 139.80000, 5)}`,
-      price: getRandomInteger(1, 30000),
+      price: getRandomInteger(0, 30000),
       type: getRandomArrayElement(ROOM_TYPES),
       rooms: getRandomInteger(1, 10),
       guests: getRandomInteger(1, 100),
