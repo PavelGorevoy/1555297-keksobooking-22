@@ -9,12 +9,24 @@ const AD_TITLES = [
   'Дом под старину',
 ];
 
-const ROOM_TYPES = [
-  {palace: 'Дворец'},
-  {flat: 'Квартира'},
-  {house: 'Дом'},
-  {bungalow: 'Бунгало'},
-];
+const ROOM_TYPES = {
+  palace: {
+    name: 'Дворец',
+    minPrice: 10000,
+  },
+  flat: {
+    name: 'Комната',
+    minPrice: 1000,
+  },
+  house: {
+    name: 'Дом',
+    minPrice: 5000,
+  },
+  bungalow: {
+    name: 'Бунгало',
+    minPrice: 0,
+  },
+};
 
 const CHECKINS = [
   '12:00',
@@ -65,6 +77,9 @@ const getRandomArrayElement = function (array) {
   return array[getRandomInteger(0, array.length - 1)];
 }
 
+const valuesRooms = Object.values(ROOM_TYPES)
+const getRandomRoom = valuesRooms[getRandomInteger(0, valuesRooms.length - 1)]
+
 const getOffer = function () {
   return {
     author: {
@@ -77,7 +92,7 @@ const getOffer = function () {
         `${getRandomFloatNumber(35.65000, 35.70000, 5)},
          ${getRandomFloatNumber(139.70000, 139.80000, 5)}`,
       price: getRandomInteger(0, 30000),
-      type: getRandomArrayElement(ROOM_TYPES),
+      type: getRandomRoom.name,
       rooms: getRandomInteger(1, 10),
       guests: getRandomInteger(1, 100),
       checkin: getRandomArrayElement(CHECKINS),
@@ -89,4 +104,7 @@ const getOffer = function () {
   };
 }
 
-export {getOffer};
+const createOffers = function() {
+  return new Array(10).fill(null).map(() => getOffer());
+}
+export {getOffer, ROOM_TYPES, createOffers};

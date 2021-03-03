@@ -1,39 +1,32 @@
-const timeIn = document.querySelector('#timein');
-const timeOut = document.querySelector('#timeout');
-const typeHousing = document.querySelector('#type');
-const priseHousing = document.querySelector('#price');
+import {ROOM_TYPES} from './data.js';
 
-const changeMinPriceForNight = function () {
-  switch (typeHousing.value) {
-    case 'bungalow':
-      priseHousing.setAttribute('min', 0);
-      priseHousing.setAttribute('placeholder', 0);
-      break
-    case 'flat':
-      priseHousing.setAttribute('min', 1000);
-      priseHousing.setAttribute('placeholder', 1000);
-      break
-    case 'house':
-      priseHousing.setAttribute('min', 5000);
-      priseHousing.setAttribute('placeholder', 5000);
-      break
-    case 'palace':
-      priseHousing.setAttribute('min', 10000);
-      priseHousing.setAttribute('placeholder', 10000);
-      break
+const formNode = document.querySelector('.ad-form');
+
+const onFormNodeChange = function (evt) {
+  switch (evt.target) {
+    case formNode.timein:
+    case formNode.timeout:
+      validateTimeSelects(evt);
+      break;
+    case formNode.type:
+      validatePriceInput();
+      break;
   }
 };
 
-typeHousing.addEventListener('change', changeMinPriceForNight);
+const validatePriceInput = function () {
+  formNode.price.placeholder = ROOM_TYPES[formNode.type.value].minPrice;
+  formNode.price.min = ROOM_TYPES[formNode.type.value].minPrice;
+};
 
-const changeTime = function (timeInElement, timeOutElement) {
-  timeInElement.value = timeOutElement.value;
-}
+const validateTimeSelects = function (evt) {
+  if (evt.target === formNode.timein) {
+    formNode.timeout.value = formNode.timein.value;
+  }
 
-timeIn.addEventListener('change', function () {
-  return changeTime(timeOut, timeIn);
-})
+  else {
+    formNode.timein.value = formNode.timeout.value;
+  }
+};
 
-timeOut.addEventListener('change', function () {
-  return changeTime(timeIn, timeOut);
-})
+formNode.addEventListener('change', onFormNodeChange);
